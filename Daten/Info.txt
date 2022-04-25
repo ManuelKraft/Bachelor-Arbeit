@@ -1,0 +1,2 @@
+Tabelle 2 und Tabelle 4 der Studie sind nicht aufgelistet, da die Datenmenge zu groß ist (größer als 20 Gigabyte).
+Tabelle 1 und Tabelle 6 der Studie beinhalten keine Daten, sondern dienen lediglich als Übersicht über Indizes und Trendwerte.
