@@ -1,0 +1,15 @@
+SELECT t1.year, Count(rx1day), 
+		ROUND(Sum(rx1day) / COUNT(rx1day)) as average 
+		
+FROM   (SELECT t1.stationid, EXTRACT(year from t1.date) as year, t2.latitude, t2.longitude, t2.elevation, 
+			   t2.name, MAX(t1.rainfall) as Rx1day 
+		FROM data t1, stations_filtered t2, stations_prcp t3, polarregionen
+		WHERE t1.stationid = t2.stationid
+		AND t3.stationid = t2.stationid
+		AND polarregionen.stationid = t1.stationid
+		AND t3.year = EXTRACT(year FROM t1.date)
+		AND t3.rain_count >= 250
+		AND EXTRACT (year from t1.date) >= 1981
+		GROUP BY t1.stationid, EXTRACT(year FROM t1.date), t2.latitude, t2.longitude, t2.elevation, t2.name 
+		ORDER BY stationid, EXTRACT(year from t1.date)) as t1
+GROUP BY t1.year

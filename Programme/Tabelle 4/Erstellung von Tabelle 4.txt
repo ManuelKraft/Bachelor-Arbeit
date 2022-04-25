@@ -1,0 +1,8 @@
+CREATE TABLE stations(
+StationID VarChar(15) NOT NULL,
+Latitude Float,
+Longitude Float,
+Elevation Float,
+Name VarChar(100),
+Country VarChar(100)
+);

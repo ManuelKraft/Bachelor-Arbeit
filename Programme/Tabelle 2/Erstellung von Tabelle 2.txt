@@ -1,0 +1,22 @@
+CREATE TABLE data(
+StationID VarChar(15) NOT NULL,
+Date date NOT NULL,
+Latitude Float,
+Longitude Float,
+Elevation Float,
+Name VarChar(100),
+Country VarChar(100),
+Temperature Float,
+DewPoint Float,
+SeaLevelPressure Float,
+StationPressure Float,
+Visibility Float,
+WindSpeed Float,
+MaxWindSpeed Float,
+MaxWindGust Float,
+MaxTemperature Float,
+MinTemperature Float,
+Rainfall Float,
+SnowDepth Float,
+FRSHTT VarChar(30)
+);

@@ -1,0 +1,20 @@
+Tabelle 2 beinhaltet die Originaldaten. Daraus konnten alle weiteren Tabellen berechnet werden.
+In Kapitel 5.1. sind das Tabelle 3, Tabelle 4 und Tabelle 5.
+
+
+Innerhalb der Datenbank gibt es weitere Tabellen, welche dazu da sind, häufig benötigte SQL-Abfragen zwischenzuspeichern, 
+damit die Dauer zukünftiger Abfragen reduziert wird. In den SQL-Statements für die Berechnung der Indizes werden diese 
+Tabellen also häufig zu lesen sein.
+Alle diese erstellten Tabellen  haben jedoch als Datenquelle also einzig und allein die 
+Original-Tabelle "data". 
+Zu diesen Tabellen mit Zwischenergebnissen gehören im Folgendem:
+
+
+1. "prcp_percentiles" mit den Attributen "stationid", "prcp_95", "prcp99"
+	- Beinhaltet die Schwellenwerte, welche zur Berechnung der Indizes R95p und R99p benötigt werden
+2. "stations_filtered" mit den Attributen "stationid", "latitude", "longitude", "elevation", "name", "country"
+	- Beinhaltet alle Wetterstationen, welche die Filterkriterien für die Starkregenanalyse erfüllen
+3. "stations_prcp" mit den Attributen "stationid", "year", "rain_count"
+	- Gibt für jede Wetterstation für jedes Jahr die Anzahl der gültigen Niederschlags-Messwerte an
+4. Neun Tabellen mit den Namen der neun Großregionen mit den Attributen "stationid", "latitude", "longitude", "country"
+	- Listet alle Stationen auf, die für die Regionale Analyse verwendet wurden

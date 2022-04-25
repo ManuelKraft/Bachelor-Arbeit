@@ -1,0 +1,18 @@
+CREATE TABLE stations_filtered(
+stationid character varying(30),
+latitude double precision,
+longitude double precision,
+elevation integer,
+name character varying(80),
+country character varying(50)
+);
+
+INSERT INTO stations_filtered
+SELECT data.stationid, latitude, longitude, elevation, name, country FROM stations_prcp, data, stations
+WHERE data.stationid = stations_prcp.stationid
+AND stations.stationid = data.stationid
+AND year >= 1981
+AND rain_count >= 250
+GROUP BY data.stationid, latitude, longitude, elevation, name, country
+HAVING MAX(year) >= 2016
+AND COUNT(year) >= 24
