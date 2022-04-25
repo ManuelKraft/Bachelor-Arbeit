@@ -1,0 +1,13 @@
+
+CREATE TABLE stations_prcp(
+stationid character varying(30),
+year integer,
+rain_count integer
+);
+
+INSERT INTO stations_prcp
+SELECT data.stationid, EXTRACT(year from data.date) as year, 
+	COUNT(data.rainfall) FILTER(WHERE data.rainfall IS NOT NULL) as rain_count FROM data
+
+GROUP BY stationid, EXTRACT(year from data.date) 
+ORDER BY stationid, EXTRACT(year from data.date) 

@@ -1,0 +1,15 @@
+CREATE TABLE temp_rx5day(
+stationid character varying(20),
+year integer,
+rx5day float,
+date_from date,
+date_until date
+);
+
+copy public.temp_Rx5day FROM 'C:/Dateipfad_angeben/basisdaten_rx5day.txt'   DELIMITER ',' NULL '-';
+
+SELECT stations_prcp.stationid, stations_prcp.year, rx5day FROM temp_rx5day, stations_prcp
+WHERE temp_rx5day.stationid = stations_prcp.stationid
+AND temp_rx5day.year = stations_prcp.year
+AND stations_prcp.rain_count >= 250
+ORDER BY stations_prcp.stationid, stations_prcp.year

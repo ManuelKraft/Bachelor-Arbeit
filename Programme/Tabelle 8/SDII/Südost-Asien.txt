@@ -1,0 +1,31 @@
+SELECT t1.year, COUNT(t1.SDII) as count, ROUND((SUM(t1.sdii)/COUNT(t1.sdii))::numeric, 2) as average 
+
+FROM 
+
+(SELECT data.stationid, EXTRACT(YEAR FROM date) as year, 
+		ROUND((SUM(rainfall) / COUNT(rainfall) FILTER(WHERE rainfall >= 1))::numeric, 2)  as SDII
+FROM data, stations_filtered, stations_prcp, suedostasien
+WHERE data.stationid = stations_filtered.stationid
+AND stations_prcp.stationid = data.stationid
+AND suedostasien.stationid = data.stationid
+AND EXTRACT(YEAR FROM date) = stations_prcp.year
+AND stations_prcp.rain_count >= 250
+AND EXTRACT(YEAR FROM date) >= 1981
+GROUP BY data.stationid, EXTRACT(YEAR FROM date), stations_filtered.name, stations_filtered.country
+HAVING COUNT(rainfall) FILTER(WHERE rainfall >= 1) >= 1
+
+UNION
+
+SELECT data.stationid, EXTRACT(YEAR FROM date) as year, COUNT(rainfall) FILTER(WHERE rainfall >= 1)  as SDII
+FROM data, stations_filtered, stations_prcp, suedostasien
+WHERE data.stationid = stations_filtered.stationid
+AND stations_prcp.stationid = data.stationid
+AND suedostasien.stationid = data.stationid
+AND EXTRACT(YEAR FROM date) = stations_prcp.year
+AND stations_prcp.rain_count >= 250
+AND EXTRACT(YEAR FROM date) >= 1981
+GROUP BY data.stationid, EXTRACT(YEAR FROM date), stations_filtered.name, stations_filtered.country
+HAVING COUNT(rainfall) FILTER(WHERE rainfall >= 1) = 0) as t1
+
+GROUP BY t1.year
+ORDER BY t1.year

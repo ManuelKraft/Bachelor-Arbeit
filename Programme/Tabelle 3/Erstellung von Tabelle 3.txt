@@ -1,0 +1,18 @@
+
+/* Kann erst nach Erstellung von Tabelle 4 durchgeführt werden. Löscht nicht mehr notwendige Spalten der 
+Tabelle "data" (Tabelle 2) nachdem Tabelle "stations" (Tabelle 4) erstellt wurde*/
+
+ALTER TABLE data
+DELETE COLUMN latitude;
+
+ALTER TABLE data
+DELETE COLUMN longitude;
+
+ALTER TABLE data
+DELETE COLUMN elevation;
+
+ALTER TABLE data
+DELETE COLUMN country;
+
+ALTER TABLE data
+DELETE COLUMN name;

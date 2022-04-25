@@ -1,0 +1,14 @@
+SELECT t1.year, COUNT(t1.R95p) as r95p_count, ROUND((SUM(t1.R95p)/COUNT(t1.R95p))::numeric, 1) as r95p_average
+FROM
+(SELECT stations_prcp.stationid, stations_prcp.year, prcp_percentiles.prcp_95th,
+		ROUND(SUM(data.rainfall) FILTER(WHERE data.rainfall > prcp_percentiles.prcp_95th)) as R95p
+FROM prcp_percentiles, stations_prcp, data, stations_filtered, suedostasien
+WHERE prcp_percentiles.stationid = stations_prcp.stationid
+AND data.stationid = stations_prcp.stationid
+AND suedostasien.stationid = data.stationid
+AND stations_filtered.stationid = data.stationid
+AND EXTRACT(year FROM data.date) = stations_prcp.year
+AND stations_prcp.year >= 1981 
+AND stations_prcp.rain_count >= 250
+GROUP BY stations_prcp.stationid, stations_prcp.year, prcp_percentiles.prcp_95th) as t1
+GROUP BY t1.year

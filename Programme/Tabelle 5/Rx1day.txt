@@ -1,0 +1,9 @@
+SELECT t1.stationid, EXTRACT(year from t1.date), MAX(t1.rainfall) as Rx1day 
+FROM data t1, stations_filtered t2, stations_prcp t3
+WHERE t1.stationid = t2.stationid
+AND t3.stationid = t2.stationid
+AND t3.year = EXTRACT(year FROM t1.date)
+AND t3.rain_count >= 250
+AND EXTRACT (year from t1.date) >= 1981
+GROUP BY t1.stationid, EXTRACT(year FROM t1.date)
+ORDER BY stationid, EXTRACT(year from t1.date)
